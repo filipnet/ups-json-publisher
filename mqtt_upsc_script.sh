@@ -12,6 +12,9 @@
 # in the 'config.sh' file before running the script.
 ################################################################################
 
+# Set environment variable for the directory
+UPS_JSON_PUBLISHER_DIR="/root/ups-json-publisher"
+
 # Check if the script was called with a device name as an argument
 if [ $# -ne 1 ]; then
     echo "Usage: $0 <device_name>"
@@ -44,7 +47,7 @@ json_output+="}"
 echo "$json_output"
 
 # Load configuration variables
-source config.sh
+source "$UPS_JSON_PUBLISHER_DIR/config.sh"
 
 # Publish JSON output to MQTT broker
 echo "$json_output" | mosquitto_pub -h "$mqtt_broker" -p "$mqtt_port" -u "$mqtt_username" -P "$mqtt_password" -i "$mqtt_client_id" -t "$mqtt_topic" -l
