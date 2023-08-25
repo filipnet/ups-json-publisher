@@ -35,7 +35,7 @@ Add the following line to run the script every 5 seconds, suppressing the script
 ```
 */5 * * * * root /bin/bash /root/ups-json-publisher/mqtt_upsc_script.sh <device_name> >/dev/null 2>&1
 ```
-Optionally you can also use the helper-script "run_upsc_script.sh". 
+For shorter time intervals you can also use the helper-script "run_upsc_script.sh". 
 
 Replace <device_name> with the actual name of your UPS device.
 
