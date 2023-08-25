@@ -35,13 +35,7 @@ json_output="{"
 while IFS=: read -r key value; do
     key=$(echo "$key" | sed 's/^[ \t]*//;s/[ \t]*$//')
     value=$(echo "$value" | sed 's/^[ \t]*//;s/[ \t]*$//')
-    
-    # Check if the value can be converted to a number
-    if [[ "$value" =~ ^[0-9]+\.?[0-9]*$ ]]; then
-        json_output+="\"$key\":$value,"
-    else
-        json_output+="\"$key\":\"$value\","
-    fi
+    json_output+="\"$key\":\"$value\","
 done <<< "$upsc_output"
 json_output="${json_output%,}"  # Remove the trailing comma
 json_output+="}"
