@@ -1,0 +1,9 @@
+#!/bin/bash
+
+# Configuration for MQTT Broker
+mqtt_broker="your_mqtt_broker_address"
+mqtt_port="your_mqtt_port"
+mqtt_username="your_mqtt_username"
+mqtt_password="your_mqtt_password"
+mqtt_client_id="your_mqtt_client_id"
+mqtt_topic="your_mqtt_topic"
