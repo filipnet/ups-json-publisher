@@ -5,10 +5,10 @@ UPS Data Publisher for MQTT: Capture UPS details using upsc, format as JSON, and
 
 - [ups-json-publisher](#ups-json-publisher)
     - [Usage](#usage)
-        - [Clone the Repository:](#clone-the-repository)
-        - [Configure MQTT Broker Settings:](#configure-mqtt-broker-settings)
-        - [Run the Script:](#run-the-script)
-        - [Run the Script Periodically with Cron:](#run-the-script-periodically-with-cron)
+        - [Clone the Repository](#clone-the-repository)
+        - [Configure MQTT Broker Settings](#configure-mqtt-broker-settings)
+        - [Run the Script](#run-the-script)
+        - [Run the Script Periodically with Cron](#run-the-script-periodically-with-cron)
     - [Node-RED transformation and InfluxDB import](#node-red-transformation-and-influxdb-import)
     - [License](#license)
 
@@ -86,6 +86,32 @@ function differentiateJSON(inputJSON) {
 var outputJSON = differentiateJSON(inputJSON);
 msg.payload = outputJSON;
 
+return msg;
+```
+
+To pass only certain values to InfluxDB, a downstream function node can be used that might look like this:
+
+```
+var inputJson = msg.payload; // Input JSON
+
+// Select desired keys/values
+/*
+    battery.charge = Battery charge (percent)
+    battery.runtime = Battery runtime (seconds)
+    ups.realpower = Current value of real power (Watts)
+*/
+var desiredKeys = ["battery.charge", "battery.runtime", "ups.realpower"]; // Specify the desired keys here
+
+var outputJson = {};
+
+for (var i = 0; i < desiredKeys.length; i++) {
+    var key = desiredKeys[i];
+    if (inputJson.hasOwnProperty(key)) {
+        outputJson[key] = inputJson[key];
+    }
+}
+
+msg.payload = outputJson; // Set the output
 return msg;
 ```
 
