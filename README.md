@@ -47,11 +47,13 @@ sudo vim /etc/crontab
 ```
 Add the following line to run the script every 5 seconds, suppressing the script output:
 ```
-*/5 * * * * root /bin/bash /root/ups-json-publisher/mqtt_upsc_script.sh <device_name> >/dev/null 2>&1
+*/5 * * * * /bin/timeout -s 2 1m /root/ups-json-publisher/mqtt_upsc_script.sh <device name> >/dev/null 2>&1
 ```
 For shorter time intervals you can also use the helper-script "run_upsc_script.sh". 
 
 Replace <device_name> with the actual name of your UPS device.
+
+If the execution intervals are too short, the script may be restarted before the previous process has finished - which can lead to problems with system performance or the MQTT server. Therefore, always adjust the timeout in the cronjob to a value below the set execution interval.
 
 - Mosquitto MQTT Client
 
